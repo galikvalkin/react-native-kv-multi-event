@@ -1,0 +1,28 @@
+{
+  "name": "react-native-kv-multi-event",
+  "description": "React Native KeyboardAvoidingView supporting custom events",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/galikvalkin/react-native-kv-multi-event.git"
+  },
+  "nativePackage": false,
+  "author": "Valentine Galkin",
+  "contributors": [],
+  "keywords": [
+    "react-native",
+    "react-native-kv-multi-event",
+    "react",
+    "native",
+    "keyboard",
+    "keyboardavoidingview"
+  ],
+  "dependencies": {
+    "tiny-emitter": "2.1.0"
+  },
+  "bugs": {
+    "url": "https://github.com/galikvalkin/react-native-kv-multi-event/issues"
+  }
+}
