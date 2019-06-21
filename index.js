@@ -4,7 +4,6 @@
 
 import KV from "./keyboardAvoidingView";
 import SV from "./scrollView";
-import * as helpers from "./helpers";
 
 const init = (
   EVENT_TYPES: string[],
@@ -25,8 +24,6 @@ const init = (
   };
 }
 
-export {
-  ...helpers
-};
+export * from "./helpers";
 
 export default init;
