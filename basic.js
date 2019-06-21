@@ -1,8 +1,4 @@
 /*
-* @Author: Valentin
-* @Date:   2018-09-03 13:51:31
- * @Last Modified by: Olexander T
- * @Last Modified time: 2018-12-12 13:37:53
 * @flow
 */
 
@@ -11,24 +7,18 @@ import * as React from "react";
 
 /* MODULES */
 import {
-  ScrollView,
   Platform,
   Keyboard,
 } from "react-native";
 import Emitter from "tiny-emitter";
 
-/* TYPES */
-import type {
-  Props as ScrollViewProps
-} from "react-native/Libraries/Components/ScrollView/ScrollView";
-
 /* CUSTOM MODULES */
 
-type _t_props = ScrollViewProps & {
+export type BasicProps = {
   customEvents?: string[],
 };
 
-export default class Basic extends React.Component<_t_props> {
+export default class Basic extends React.Component<BasicProps> {
   _subscriptions = [];
 
   _eventEmitter: ?Object = null;

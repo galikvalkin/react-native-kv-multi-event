@@ -20,17 +20,13 @@ import type EmitterSubscription from "react-native/Libraries/vendor/emitter/Emit
 import type { ViewStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet";
 import type { ViewProps, ViewLayout, ViewLayoutEvent } from "react-native/Libraries/Components/View/ViewPropTypes";
 import type { KeyboardEvent } from "react-native/Libraries/Components/Keyboard/Keyboard";
+import type { BasicProps } from "./basic";
 
 /* CUSTOM MODULES */
 import Basic from "./basic";
 
-type Props = $ReadOnly<{|
+type CombinedProps = {|
   ...ViewProps,
-
-  /**
-   * Specify custom event to be listened
-   */
-  customEvents?: string[],
 
   /**
    * Specify how to react to the presence of the keyboard.
@@ -53,7 +49,9 @@ type Props = $ReadOnly<{|
    * may be non-zero in some cases. Defaults to 0.
    */
   keyboardVerticalOffset: number,
-|}>;
+|} & BasicProps;
+
+type Props = $ReadOnly<CombinedProps>;
 
 type State = {|
   bottom: number,
