@@ -7,7 +7,7 @@ import * as React from "react";
 
 /* MODULES */
 import {
-  ScrollView,
+  ScrollView as ReactNativeScrollView,
   Platform,
   Keyboard,
 } from "react-native";
@@ -73,7 +73,7 @@ export default class ScrollView extends Basic<_t_props> {
       parentScrollTo: this.parentScrollTo
     };
     return (
-      <ScrollView
+      <ReactNativeScrollView
         keyboardShouldPersistTaps="never"
         scrollEventThrottle={1000}
         {...this.props}
@@ -86,7 +86,7 @@ export default class ScrollView extends Basic<_t_props> {
             React.cloneElement(child, childProps)
           ))
         }
-      </ScrollView>
+      </ReactNativeScrollView>
     );
   }
 }
