@@ -2,6 +2,9 @@
  * @flow
  */
 
+/* REACT */
+import * as React from "react";
+
 import KV from "./keyboardAvoidingView";
 import SV from "./scrollView";
 
@@ -9,18 +12,20 @@ const init = (
   EVENT_TYPES: string[],
 ) => {
   return {
-    KeyboardAvoidingView: (props) => (
+    KeyboardAvoidingView: React.forwardRef((props, ref) => (
       <KV
         {...props}
+        ref={ref}
         customEvents={EVENT_TYPES}
       />
-    ),
-    ScrollView: (props) => (
+    )),
+    ScrollView: React.forwardRef((props, ref) => (
       <SV
         {...props}
+        ref={ref}
         customEvents={EVENT_TYPES}
       />
-    ),
+    )),
   };
 }
 
