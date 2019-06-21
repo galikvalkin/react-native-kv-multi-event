@@ -2,7 +2,10 @@
  * @flow
  */
 
+/* REACT */
 import React from "react";
+
+/* MODULES */
 import {
   Keyboard,
   Platform,
@@ -10,13 +13,16 @@ import {
   View,
   LayoutAnimation
 } from "react-native";
-
 import Emitter from "tiny-emitter";
 
+/* TYPES */
 import type EmitterSubscription from "react-native/Libraries/vendor/emitter/EmitterSubscription";
 import type { ViewStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet";
 import type { ViewProps, ViewLayout, ViewLayoutEvent } from "react-native/Libraries/Components/View/ViewPropTypes";
 import type { KeyboardEvent } from "react-native/Libraries/Components/Keyboard/Keyboard";
+
+/* CUSTOM MODULES */
+import Basic from "./basic";
 
 type Props = $ReadOnly<{|
   ...ViewProps,
@@ -57,17 +63,14 @@ type State = {|
  * View that moves out of the way when the keyboard appears by automatically
  * adjusting its height, position, or bottom padding.
  */
-export default class KeyboardAvoidingView extends React.Component<Props, State> {
+export default class KeyboardAvoidingView extends Basic<Props, State> {
   static defaultProps = {
     enabled: true,
     keyboardVerticalOffset: 0,
   };
 
-  _eventEmitter: ?Object = null;
 
   _frame: ?ViewLayout = null;
-
-  _subscriptions: Array<EmitterSubscription> = [];
 
   viewRef: {current: React.ElementRef<any> | null};
 
@@ -90,39 +93,6 @@ export default class KeyboardAvoidingView extends React.Component<Props, State> 
     // Calculate the displacement needed for the view such that it
     // no longer overlaps with the keyboard
     return Math.max(frame.y + frame.height - keyboardY, 0);
-  }
-
-  _initializeSubscriptions = () => {
-    let basicEvents = [];
-    if (Platform.OS === "ios") {
-      basicEvents = [
-        Keyboard.addListener("keyboardWillChangeFrame", this._onKeyboardChange),
-      ];
-    } else {
-      basicEvents = [
-        Keyboard.addListener("keyboardDidHide", this._onKeyboardChange),
-        Keyboard.addListener("keyboardDidShow", this._onKeyboardChange),
-      ];
-    }
-    this._subscriptions = [
-      {
-        type: "basic",
-        listeners: basicEvents
-      }
-    ];
-    if (this.props.customEvents) {
-      this._eventEmitter = new Emitter();
-      this.props.customEvents.forEach((event: string) => {
-        const customEvents = [
-          this._eventEmitter.on(event, this._onKeyboardChange),
-        ];
-        this._subscriptions.push({
-          type: "custom",
-          event,
-          listeners: customEvents
-        });
-      });
-    }
   }
 
   _onKeyboardChange = (event: ?KeyboardEvent) => {
@@ -158,30 +128,6 @@ export default class KeyboardAvoidingView extends React.Component<Props, State> 
       this._initialFrameHeight = this._frame.height;
     }
   };
-
-  emitEvent = (name: string, event: ?KeyboardEvent): void => {
-    if (this._eventEmitter) {
-      this._eventEmitter.emit(name, event);
-    }
-  }
-
-  componentDidMount(): void {
-    this._initializeSubscriptions();
-  }
-
-  componentWillUnmount(): void {
-    this._subscriptions.forEach((subscription) => {
-      if (subscription.type === "basic") {
-        subscription.listeners.forEach((listener) => {
-          listener.remove();
-        });
-      } else if (subscription.type === "custom") {
-        if (this._eventEmitter) {
-          this._eventEmitter.off(subscription.event);
-        }
-      }
-    });
-  }
 
   render(): React.Node {
     const {
