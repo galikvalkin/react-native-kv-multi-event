@@ -17,14 +17,11 @@ import Emitter from "tiny-emitter";
 import type {
   Props as ScrollViewProps
 } from "react-native/Libraries/Components/ScrollView/ScrollView";
-import type { BasicProps } from "./basic";
+import type { KeyboardEvent } from "react-native/Libraries/Components/Keyboard/Keyboard";
 
-/* CUSTOM MODULES */
-import Basic from "./basic";
+type _t_props = ScrollViewProps;
 
-type _t_props = ScrollViewProps & BasicProps;
-
-export default class ScrollView extends Basic<_t_props> {
+export default class ScrollView extends React.Component<_t_props> {
   _ref = React.createRef();
 
   _contentOffset = 0;
@@ -41,7 +38,7 @@ export default class ScrollView extends Basic<_t_props> {
     this._overlayItemPosition = endCoordinates.screenY;
   };
 
-  parentScrollTo = (args) => {
+  parentScrollTo = (args: { py: number, height: number }) => {
     const elementPosition = args.py + args.height;
     if (this._overlayItemPosition && this._overlayItemPosition < elementPosition) {
       const final = elementPosition + this._contentOffset;
@@ -68,7 +65,10 @@ export default class ScrollView extends Basic<_t_props> {
   }
 
   render() {
-    const { children } = this.props;
+    const {
+      children,
+      ...props
+    } = this.props;
     const childProps = {
       parentScrollTo: this.parentScrollTo
     };
@@ -76,7 +76,7 @@ export default class ScrollView extends Basic<_t_props> {
       <ReactNativeScrollView
         keyboardShouldPersistTaps="never"
         scrollEventThrottle={1000}
-        {...this.props}
+        {...props}
         ref={this._ref}
         onLayout={this._onLayout}
         onScroll={this._onScroll}

@@ -7,10 +7,11 @@ import * as React from "react";
 
 import KV from "./keyboardAvoidingView";
 import SV from "./scrollView";
+import BasicHOC from "./basicHOC";
 
 export * from "./helpers";
 
 export default {
-  KeyboardAvoidingView: KV,
-  ScrollView: SV,
+  KeyboardAvoidingView: BasicHOC(KV),
+  ScrollView: BasicHOC(SV),
 };

@@ -3,7 +3,7 @@
  */
 
 /* REACT */
-import React from "react";
+import * as React from "react";
 
 /* MODULES */
 import {
@@ -20,10 +20,6 @@ import type EmitterSubscription from "react-native/Libraries/vendor/emitter/Emit
 import type { ViewStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet";
 import type { ViewProps, ViewLayout, ViewLayoutEvent } from "react-native/Libraries/Components/View/ViewPropTypes";
 import type { KeyboardEvent } from "react-native/Libraries/Components/Keyboard/Keyboard";
-import type { BasicProps } from "./basic";
-
-/* CUSTOM MODULES */
-import Basic from "./basic";
 
 type CombinedProps = {|
   ...ViewProps,
@@ -49,7 +45,7 @@ type CombinedProps = {|
    * may be non-zero in some cases. Defaults to 0.
    */
   keyboardVerticalOffset: number,
-|} & BasicProps;
+|};
 
 type Props = $ReadOnly<CombinedProps>;
 
@@ -61,7 +57,7 @@ type State = {|
  * View that moves out of the way when the keyboard appears by automatically
  * adjusting its height, position, or bottom padding.
  */
-export default class KeyboardAvoidingView extends Basic<Props, State> {
+export default class KeyboardAvoidingView extends React.Component<Props, State> {
   static defaultProps = {
     enabled: true,
     keyboardVerticalOffset: 0,
@@ -70,7 +66,7 @@ export default class KeyboardAvoidingView extends Basic<Props, State> {
 
   _frame: ?ViewLayout = null;
 
-  viewRef: {current: React.ElementRef<any> | null};
+  viewRef: ?{current: React.ElementRef<any> | null};
 
   _initialFrameHeight: number = 0;
 
